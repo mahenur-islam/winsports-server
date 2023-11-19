@@ -94,7 +94,7 @@ async function run() {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
       }
-    });h
+    });
 
     // Endpoint to add a blog to the wishlist
     app.post("/wishlist/:id", async (req, res) => {
@@ -118,7 +118,15 @@ async function run() {
         res.status(500).json({ error: "Internal Server Error" });
       }
     });
-
+    //endpoints for deleting a blog from wishlist
+    app.delete("/wishlist/:id", async (req, res) => {
+        const id = req.params.id;
+        const query = {
+          _id: new ObjectId(id),
+        };
+        const result = await wishlistCollection.deleteOne(query);
+        res.send(result);
+      });
     // Additional endpoints...
 
     app.get("/", (req, res) => {
